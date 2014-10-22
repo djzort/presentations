@@ -1,0 +1,303 @@
+%deffont "standard"   xfont "serif"
+%deffont "thick"      xfont "sans-serif"
+%deffont "typewriter" xfont "monospace"
+%default 1 area 90 90, leftfill, size 2, fore "black", back "white", font "thick"
+%default 2 size 7, vgap 10, prefix " "
+%default 3 size 2, bar "gray70", vgap 10
+%default 4 size 5, fore "black", vgap 30, prefix " ", font "standard"
+%tab 1 size 5, vgap 40, prefix "  ", icon arc "green" 50
+%page
+%nodefault
+%center, size 7, font "standard", back "white", fore "black", vgap 30
+
+
+
+
+Dist::Zilla
+%size 5, vgap 20
+
+A very brief introduction
+%size 4, vgap 30
+
+Dean Hamstead
+dean@bytefoundry.com.au
+
+%page
+%nodefault
+%center, size 7, font "standard", back "white", fore "black", vgap 30
+
+
+
+
+Or
+
+%page
+%nodefault
+%center, size 7, font "standard", back "white", fore "black", vgap 30
+
+
+
+
+How I Learned to Stop Worrying
+and Love CPAN Authoring
+
+%page
+
+Whats coming up...
+
+	(High level stuff only)
+	What Dist::Zilla is
+	What Dist::Zilla does
+	Some links
+	Play about on the CLI
+	Questions I probably won't be able to answer
+	End
+
+%page
+%nodefault
+%center, size 7, font "standard", back "white", fore "black", vgap 30
+
+
+
+
+So what is it?
+
+
+%page
+%nodefault
+%center, size 5, font "standard", back "white", fore "black", vgap 30
+
+
+"Dist::Zilla is a tool for packaging code to
+release to the CPAN.
+The central notion of Dzil is that
+no programmer should ever have to waste
+his or her precious time on boring things
+like README files, prerequisite accounting,
+duplicated license statements, or anything
+else other than solving real problems."
+
+-Ricardo Signes aka rjbs
+
+%page
+%nodefault
+%center, size 4, font "standard", back "white", fore "black", vgap 30
+
+
+
+It's a framework for releasing perl code.
+
+Because functionality is via plugins - people can easily add new features, making it more increasingly useful.
+
+We know that it scratched an itch well,
+because numerous clones have appeared taking
+different approaches.
+
+YMMV, but authoring is fun again!
+
+%page
+%nodefault
+%center, size 5, font "standard", back "white", fore "black", vgap 30
+
+
+
+For users of your Perl modules, nothing changes.
+
+They still use Build.PL or Makefile.PL etc.
+
+Dist::Zilla generates all these bits and pieces,
+but isn't actually used at the consumer end.
+
+
+%page
+
+It does stuff like...
+
+	Generates Makefile.PL and/or Build.PL
+	Generates all manner of boring meta files
+	Generates all sorts of boring test suites
+	Inserts version numbers and contact details
+	Prunes away cruft
+	Runs the aforementioned tests
+	Tar's things up
+	Uploads to PAUSE
+	Plays around with git
+	Can even Tweet out the release
+	Whatever options you select
+
+%page
+%nodefault
+%center, size 5, font "standard", back "white", fore "black", vgap 30
+
+
+
+PAUSE is sufficiently annoying to justify
+a tool that hide's it.
+
+So is keeping up with all the meta files
+(META.{yml,json}, cpanfile etc).
+
+Now I barely notice. Thanks rjbs!
+
+%page
+%nodefault
+%center, size 5, font "standard", back "white", fore "black", vgap 30
+
+Used with git (Github in particular) its very quick to
+include then publish contributions that kind people might send you.
+
+Tying in perltidy and perlcritic makes it easier still.
+
+Contributors feel welcome and get a
+sense of satisfaction when a new release includes their work.
+
+You get free bugfix's and features you
+never thought of!
+
+
+%page
+%nodefault
+%center, size 7, font "standard", back "white", fore "black", vgap 30
+
+
+
+
+Heres one I prepared earlier...
+NetAddr::MAC on CPAN
+
+%page
+%nodefault
+%leftfill, size 2, font "standard", back "white", fore "black", vgap 10, prefix "    "
+
+\# cat dist.ini
+
+name = NetAddr-MAC
+version = 0.84
+author = Dean Hamstead <dean@bytefoundry.com.au>
+license = Perl_5
+copyright_holder = Dean Hamstad
+copyright_year = 2013
+
+[GatherDir]
+[MetaYAML]
+[MetaJSON]
+[MetaTests]
+[Manifest]
+[ManifestSkip]
+[PruneCruft]
+[License]
+[MakeMaker]
+
+(cont...)
+
+%page
+%nodefault
+%leftfill, size 2, font "standard", back "white", fore "black", vgap 10, prefix "    "
+
+[ExtraTests]
+[CPANFile]
+[Test::Perl::Critic]
+critic_config = t/.perlcriticrc
+[Test::Kwalitee]
+[Test::EOL]
+[PodCoverageTests]
+[PodSyntaxTests]
+[TestRelease]
+[ConfirmRelease]
+[UploadToCPAN]
+[ExecDir]
+
+[Prereqs]
+Carp       = 0
+List::Util = 0
+strict = 0
+warnings = 0
+constant = 0
+vars = 0
+base = 0
+Exporter = 0
+perl = 5.004
+
+[Prereqs / BuildRequires]
+Test::Trap = 0
+
+%page
+
+As promised, here are some links:
+
+	http://dzil.org/
+	Tutorial http://dzil.org/tutorial/start.html
+	Fork it on GitHub https://github.com/rjbs/Dist-Zilla
+	Step by Step conversion http://www.perl.com/pub/2010/03/more-code-less-cruft-managing-distributions-with-distzilla.html
+	"Why I am using Dist::Zilla" http://www.dagolden.com/index.php/752/why-im-using-distzilla/
+	Fair and Balanced, "Why I Hate Dist::Zilla" http://www.perlmonks.org/?node_id=903657
+
+
+%page
+%nodefault
+%center, size 7, font "standard", back "white", fore "black", vgap 30
+
+
+
+I'm sold!
+How do install Dist::Zilla?
+%page
+%nodefault
+%leftfill, size 4, font "standard", back "white", fore "black", vgap 30
+
+
+Debian and friends:
+
+\# apt-get install libdist-zilla-perl
+(Debian is a little thin on plugins, use dh-make-perl to package more up)
+
+Fedora, RedHat and CentOS:
+
+\# install debian
+(Thats my little joke)
+
+Using perlbrew:
+
+\# cpanm Dist::Zilla
+
+%page
+%nodefault
+%leftfill, size 2, font "standard", back "white", fore "black", vgap 10, prefix "    "
+
+dean@cliffjumper:~/git/github/NetAddr-MAC$ dzil
+Available commands:
+
+    commands: list the application's commands
+        help: display a command's help screen
+
+         add: add modules to an existing dist
+  authordeps: list your distribution's author dependencies
+       build: build your dist
+       clean: clean up after build, test, or install
+     install: install your dist
+    listdeps: print your distribution's prerequisites
+         new: mint a new dist
+         nop: do nothing: initialize dzil, then exit
+     release: release your dist
+         run: run stuff in a dir where your dist is built
+       setup: set up a basic global config file
+       smoke: smoke your dist
+        test: test your dist
+
+%page
+%nodefault
+%center, size 7, font "standard", back "white", fore "black", vgap 30
+
+
+
+
+Questions?
+
+%page
+%nodefault
+%center, size 7, font "standard", back "white", fore "black", vgap 30
+
+
+
+
+Ende

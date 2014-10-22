@@ -1,0 +1,322 @@
+%deffont "standard"   xfont "serif"
+%deffont "thick"      xfont "sans-serif"
+%deffont "typewriter" xfont "monospace"
+%default 1 area 90 90, leftfill, size 2, fore "black", back "white", font "thick"
+%default 2 size 7, vgap 10, prefix " "
+%default 3 size 2, bar "gray70", vgap 10
+%default 4 size 5, fore "black", vgap 30, prefix " ", font "standard"
+%tab 1 size 5, vgap 40, prefix "  ", icon arc "green" 50
+%page
+%nodefault
+%center, size 7, font "standard", back "white", fore "black", vgap 30
+
+
+
+
+Some Perl Patterns
+%size 5, vgap 20
+
+There may not be a perfect solution,
+but most of them suck.
+%size 4, vgap 30
+
+Dean Hamstead
+dean@bytefoundry.com.au
+
+%page
+
+Whats coming up...
+
+	Iterators
+	Dispatch Tables
+	Tying
+	Decorators
+	Memoize (Flyweight)
+	Data Containers
+	Orcish (Or-cache) Manuver
+	Evaluating Perl Code
+	Try Catch
+	Overloading
+
+%page
+
+Iterators
+%leftfill, size 2, font "standard", back "white", fore "black", vgap 10, prefix "    "
+
+my @foo = map { $_ * $_ } 0 .. 100;
+
+my @foo = grep { $_ % 2 } 0 .. 100;
+
+while (my($k,$v) = each %foo)) { .. }
+
+while (my $line = <FH>) { .. }
+
+while (my $foo = $obj->next) { .. }
+
+for my $foo (@foo) { .. }
+
+for my $foo (keys %foo) { .. }
+
+
+%page
+
+Dispatch Tables
+%leftfill, size 2, font "standard", back "white", fore "black", vgap 10, prefix "    "
+
+Trivial case:
+
+my %disp_table = ( something => \\&do_something );
+
+$disp_table{'something'}->();
+
+%page
+
+Dispatch Tables
+%leftfill, size 2, font "standard", back "white", fore "black", vgap 10, prefix "    "
+
+Full example:
+
+my %disp_table = (
+  one   => sub { say 'One!'},
+  two   => sub { say 'Two!'},
+  three => \\&three,
+  four  => sub { other('myarg],@_) }
+);
+
+Fall-through (chaining):
+
+($disp_table{'not there'} || sub {})->();
+
+%page
+
+Tying
+%leftfill, size 2, font "standard", back "white", fore "black", vgap 10, prefix "    "
+
+Scalar:
+
+tie $foo, 'MyPackage', @options;
+
+Must implement:
+The constructor - TIESCALAR,
+What returns a value - FETCH
+What stores a value - STORE
+
+Optionally UNTIE and/or DESTROY
+
+
+%page
+
+Tying
+%leftfill, size 2, font "standard", back "white", fore "black", vgap 10, prefix "    "
+
+Array:
+
+tie @foo, 'MyPackage', @options;
+
+Must implement:
+The constructor - TIEARRAY,
+What returns a value - FETCH
+What stores a value - STORE
+What returns array size - FETCHSIZE
+What stores array size - STORESIZE
+What to do when emptying - CLEAR
+
+%page
+
+Tying
+%leftfill, size 2, font "standard", back "white", fore "black", vgap 10, prefix "    "
+
+Array (cont):
+
+Useful:
+POP, PUSH, SHIFT, UNSHIFT, SPICE, DELETE, EXISTS
+Used as per their lowercase function call
+
+Optionally
+UNTIE
+DESTROY
+EXTEND
+
+%page
+
+Tying
+%leftfill, size 2, font "standard", back "white", fore "black", vgap 10, prefix "    "
+
+Hash:
+
+tie %foo, 'MyPackage', @options;
+
+Must implement:
+The constructor - TIEHASH,
+What returns a value - FETCH
+What stores a value - STORE
+Delete via - DELETE
+What to do when emptying - CLEAR
+
+%page
+
+Tying
+%leftfill, size 2, font "standard", back "white", fore "black", vgap 10, prefix "    "
+
+Hash (cont):
+
+Useful:
+FIRSTKEY, NEXTKEY
+Used with keys() and each()
+
+SCALAR
+What to do in scalar context
+
+Optionally
+UNTIE
+DESTROY
+EXTEND
+
+%page
+
+Tying
+%leftfill, size 2, font "standard", back "white", fore "black", vgap 10, prefix "    "
+
+File Handles:
+
+Some Homework for you!
+
+%page
+
+Memoize (Flyweight)
+%leftfill, size 2, font "standard", back "white", fore "black", vgap 10, prefix "    "
+
+use Memoize;
+memoize('fib');
+
+# Compute Fibonacci numbers
+sub fib {
+    my $n = shift;
+    return $n if $n < 2;
+    fib($n-1) + fib($n-2);
+}
+
+
+%page
+
+Data Containers
+%leftfill, size 2, font "standard", back "white", fore "black", vgap 10, prefix "    "
+
+my @foo = (
+
+    list => [ 1 .. 10, ],
+    hash => { a => 'b', c => 'd' },
+    scalar => 'some text',
+
+    people => [
+        { name => 'John Doe', age => 21 },
+        { name => 'Jane Doe', age => 23 }
+    ],
+
+)
+Use 'ref' to determine what something is.
+Code so that datastructures control execution.
+
+
+
+%page
+
+Orcish Maneuver (Or-cache)
+%leftfill, size 2, font "standard", back "white", fore "black", vgap 10, prefix "    "
+
+keys my %or_cache = @in;
+@out = sort {
+    ($or_cache{$a} ||= KEY($a))
+    cmp
+    ($or_cache{$b} ||= KEY($b))
+} @in;
+
+%page
+
+Evaluating Perl Code
+%leftfill, size 2, font "standard", back "white", fore "black", vgap 10, prefix "    "
+
+open my $CONFIG, "config.txt"
+    or die "couldn't...\\n";
+my $config = join "", <$CONFIG>;
+close $CONFIG;
+
+eval $config;
+die "Couldn't eval your config: $@\\n" if $@;
+
+
+%page
+
+Try Catch
+%leftfill, size 2, font "standard", back "white", fore "black", vgap 10, prefix "    "
+
+use Try::Tiny;
+# handle errors with a catch handler
+try {
+    die "foo";
+} catch {
+    warn "caught error: $_"; # not $@
+};
+
+# handle errors with a catch handler
+try {
+    die "foo";
+} catch {
+    warn "caught error: $_"; # not $@
+} finally {
+    print "I'm out";
+}
+
+
+%page
+
+Overloading
+%leftfill, size 2, font "standard", back "white", fore "black", vgap 10, prefix "    "
+
+package SomeThing;
+use overload
+'+' => \\&myadd,
+'-' => \\&mysub;
+# etc
+
+...
+package main;
+$a = SomeThing->new( 57 );
+$b = 5 + $a;
+...
+
+%page
+
+Overloading
+%leftfill, size 2, font "standard", back "white", fore "black", vgap 10, prefix "    "
+
+if (overload::Overloaded $b) {...}
+...
+$strval = overload::StrVal $b;
+
+
+%page
+
+As promised, here are some links:
+
+	Perlish Patterns, Phil Crow
+	http://perldesignpatterns.com
+	http://www.perl.com/pub/2003/06/13/design1.html
+	http://www.perl.com/pub/2003/08/07/design2.html
+	http://perldoc.perl.org/overload.html
+
+%page
+%nodefault
+%center, size 7, font "standard", back "white", fore "black", vgap 30
+
+
+
+Questions?
+
+%page
+%nodefault
+%center, size 7, font "standard", back "white", fore "black", vgap 30
+
+
+
+Ende
