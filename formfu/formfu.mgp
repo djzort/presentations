@@ -457,7 +457,8 @@ You can easily add more.
 	regex, ascii, email, datetime, word, printable characters,
 	set, singlevalue, bool, equal
 
-plus many many others (homework for you)
+Plus many many others (homework for you).
+Note: many of these are now html5 types, see http://www.w3.org/wiki/HTML/Elements/input
 
 %page
 
